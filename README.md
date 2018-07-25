@@ -14,6 +14,7 @@ $ git clone https://github.com/iPersona/tmux.git ~/.tmux/
 ```
 $ chmod 755 init.sh
 $ ./init.sh
+choose your platform
 ```
 
 - Enjoy!
