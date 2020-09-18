@@ -11,24 +11,30 @@ read platform
 
 # symbol link to ~/.tmux.conf
 tmuxConfLn=~/.tmux.conf
+
+if [ -L $tmuxConfLn]; then
+  echo "removing old shortcut..."
+  rm $tmuxConfLn
+fi
+
 if [ $platform -eq 1 ]
 then
-    tmuxConf=~/.tmux/tmux-linux.conf
+    tmuxConf=$PWD/tmux-linux.conf
     echo install xsel
     sudo pacman -S xsel
 else
-    tmuxConf=~/.tmux/tmux-mac.conf
+    tmuxConf=$PWD/tmux-mac.conf
 fi
 
 if [ -L $tmuxConfLn ]; then
   rm $tmuxConfLn
 fi
-echo Making symbol link...
+echo "creating symbol link..."
 ln -s $tmuxConf $tmuxConfLn
 
 # install plugins
-echo Installing plugins...
-tmuxPlugin=~/.tmux/plugins
+echo "installing plugins..."
+tmuxPlugin=$PWD/plugins
 if [ -d $tmuxPlugin ]; then
   rm -rf $tmuxPlugin
 fi
@@ -38,7 +44,7 @@ git clone https://github.com/tmux-plugins/tmux-yank $tmuxPlugin/tmux-yank
 
 
 # reload config
-echo Reloading config...
+echo "applying new configuration..."
 tmux source $tmuxConfLn
 
-echo Setting tmux config DONE!
+echo "finished!"
